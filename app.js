@@ -43,24 +43,66 @@ function renderLogin() {
   };
 }
 
+async function fetchEvents() {
+  const res = await fetch(`${API}/api/events`);
+  return await res.json();
+}
+
+async function createEvent(title, date, userId) {
+  const res = await fetch(`${API}/api/events`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title,
+      date,
+      created_by: userId
+    })
+  });
+  return await res.json();
+}
+
 async function renderApp() {
   const me = getMe();
+  const data = await fetchEvents();
+  const events = data.events || [];
+
   document.getElementById("app").innerHTML = `
     <h1>Meetly V2</h1>
-    <p>Connecté en: <b>${me.name}</b> (id: ${me.id})</p>
+    <p>Connecté en: <b>${me.name}</b></p>
     <button id="logout">Changer de pseudo</button>
+
     <hr/>
-    <p>✅ Prochaine étape: afficher / créer des events + gérer dispos</p>
+
+    <h2>Créer une soirée</h2>
+    <input id="eventTitle" placeholder="Titre de la soirée" />
+    <input id="eventDate" type="datetime-local" />
+    <button id="createEvent">Créer</button>
+
+    <hr/>
+
+    <h2>Soirées</h2>
+    <ul>
+      ${events.map(e => `
+        <li>
+          <b>${e.title}</b><br/>
+          ${new Date(e.date).toLocaleString()}
+        </li>
+      `).join("")}
+    </ul>
   `;
 
   document.getElementById("logout").onclick = () => {
     localStorage.removeItem("meetly_me");
     renderLogin();
   };
-}
 
-(function start() {
-  const me = getMe();
-  if (!me) renderLogin();
-  else renderApp();
-})();
+  document.getElementById("createEvent").onclick = async () => {
+    const title = document.getElementById("eventTitle").value;
+    const date = document.getElementById("eventDate").value;
+
+    if (!title || !date) return;
+
+    await createEvent(title, date, me.id);
+    renderApp(); // refresh
+  };
+}

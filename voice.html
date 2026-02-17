@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>TeoCord - Vocal</title>
+  <style>
+    body { font-family: system-ui; padding: 20px; }
+    button { padding: 10px 14px; margin-right: 8px; }
+    .row { margin: 12px 0; }
+  </style>
+</head>
+<body>
+  <h1>TeoCord — Vocal</h1>
+
+  <div class="row">
+    <label>Salon vocal:</label>
+    <select id="room">
+      <option value="general">general</option>
+      <option value="gaming">gaming</option>
+      <option value="chill">chill</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label>Pseudo:</label>
+    <input id="name" placeholder="Teoma" />
+  </div>
+
+  <div class="row">
+    <button id="join">Rejoindre</button>
+    <button id="leave" disabled>Quitter</button>
+    <button id="mute" disabled>Mute</button>
+    <span id="status"></span>
+  </div>
+
+  <div class="row">
+    <h3>Participants</h3>
+    <ul id="peers"></ul>
+  </div>
+
+  <script src="./voice.js"></script>
+</body>
+</html>
