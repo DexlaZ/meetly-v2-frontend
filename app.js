@@ -21,8 +21,8 @@ async function createOrGetUser(name) {
 }
 
 function renderLogin() {
-  document.body.innerHTML = `
-    <h1>Meetly V2</h1>
+  document.getElementById("app").innerHTML = `
+    <h1>Concorde</h1>
     <p>Choisis ton pseudo :</p>
     <input id="name" placeholder="Teoma" />
     <button id="go">Continuer</button>
@@ -67,7 +67,7 @@ async function renderApp() {
   const events = data.events || [];
 
   document.getElementById("app").innerHTML = `
-    <h1>Meetly V2</h1>
+    <h1>Concorde</h1>
     <p>Connecté en: <b>${me.name}</b></p>
     <button id="logout">Changer de pseudo</button>
 
