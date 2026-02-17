@@ -104,5 +104,11 @@ async function renderApp() {
 
     await createEvent(title, date, me.id);
     renderApp(); // refresh
+    (function start() {
+  const me = getMe();
+  if (!me) renderLogin();
+  else renderApp();
+})();
+
   };
 }
